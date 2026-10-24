@@ -1,0 +1,7 @@
+# pipecat-gnani 0.5.12 breaks on pipecat-ai>=1.14 (private _NotGiven import)
+# and on gnani-vachana>=0.8 (Timbre v2.0 voices removed). Unpin when the plugin catches up.
+pipecat-gnani==0.5.12
+pipecat-ai[runner,webrtc,silero,groq,openai]==1.5.0
+gnani-vachana>=0.7.9,<0.8
+python-dotenv
+loguru

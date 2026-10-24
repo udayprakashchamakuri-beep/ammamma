@@ -1,13 +1,13 @@
 # Ammamma
 
-An AI grandmother who keeps scam callers on the line. Gnani Prisma (STT) + Timbre (TTS) on a Pipecat phone pipeline; Groq LLM until self-hosted Evon is up.
+An AI grandmother who keeps scam callers on the line. Gnani Prisma (STT) + Timbre (TTS) on a Pipecat phone pipeline; Gemini LLM until self-hosted Evon is up.
 
 ## Setup
 
 ```bash
 py -3.11 -m venv .venv
 .venv/Scripts/python -m pip install -r requirements.txt
-cp .env.example .env   # fill GNANI_API_KEY and GROQ_API_KEY
+cp .env.example .env   # fill GNANI_API_KEY and GEMINI_API_KEY
 .venv/Scripts/python test_bot.py
 ```
 

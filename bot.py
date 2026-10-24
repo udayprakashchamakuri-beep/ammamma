@@ -25,7 +25,6 @@ from pipecat.processors.aggregators.llm_response_universal import (
 )
 from pipecat.runner.types import RunnerArguments, WebSocketRunnerArguments
 from pipecat.runner.utils import create_transport
-from pipecat.services.groq.llm import GroqLLMService
 from pipecat.services.openai.llm import OpenAILLMService
 from pipecat.transcriptions.language import Language
 from pipecat.transports.base_transport import BaseTransport, TransportParams
@@ -57,7 +56,7 @@ def system_prompt(lang: str) -> str:
 
 
 def make_llm(env, prompt: str):
-    """Self-hosted Evon when EVON_BASE_URL is set, otherwise Groq."""
+    """Self-hosted Evon when EVON_BASE_URL is set, otherwise Gemini (both OpenAI-compatible)."""
     if env.get("EVON_BASE_URL"):
         return OpenAILLMService(
             api_key=env.get("EVON_API_KEY", "none"),
@@ -71,13 +70,16 @@ def make_llm(env, prompt: str):
                 extra={"extra_body": {"chat_template_kwargs": {"enable_thinking": False}}},
             ),
         )
-    if not env.get("GROQ_API_KEY"):
-        raise RuntimeError("Set GROQ_API_KEY, or EVON_BASE_URL for self-hosted Evon.")
-    return GroqLLMService(
-        api_key=env["GROQ_API_KEY"],
-        settings=GroqLLMService.Settings(
-            model=env.get("GROQ_MODEL", "llama-3.3-70b-versatile"),
+    if not env.get("GEMINI_API_KEY"):
+        raise RuntimeError("Set GEMINI_API_KEY, or EVON_BASE_URL for self-hosted Evon.")
+    return OpenAILLMService(
+        api_key=env["GEMINI_API_KEY"],
+        base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+        settings=OpenAILLMService.Settings(
+            # 2.5-flash with thinking off: ~1.2s to first token vs ~2.5s for 3.8-flash.
+            model=env.get("GEMINI_MODEL", "gemini-2.5-flash"),
             system_instruction=prompt,
+            extra={"reasoning_effort": "none"},
         ),
     )
 

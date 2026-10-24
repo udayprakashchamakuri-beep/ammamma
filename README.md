@@ -27,4 +27,4 @@ Serve Evon with vLLM (see its Hugging Face card), then set `EVON_BASE_URL=http:/
 
 ## Tuning
 
-The character lives in `persona.md`; edit it, no code changes needed. Language and voice are `AMMAMMA_LANG` / `AMMAMMA_VOICE` in `.env`.
+The character lives in `persona.md`; edit it, no code changes needed. `AMMAMMA_LANG` in `.env` sets the language she answers in (Hindi, English, Telugu, Tamil, Kannada, Malayalam, Marathi, Bengali, Gujarati, Punjabi). Mid-call she switches when the caller asks ("Telugu lo matladandi"); the per-language voices are in `LANGUAGES` in `bot.py`.
